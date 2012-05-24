@@ -17,7 +17,23 @@ Either:
 Usage
 -----
 
-See `examples/example.js`.
+    var soynode = require('../lib/soynode')
+    
+    soynode.setOptions({
+        tmpDir: '/tmp/soynode-example'
+      , allowDynamicRecompile: true
+    })
+
+    soynode.compileTemplates(__dirname, function (err) {
+      if (err) throw err
+      // Templates are now ready to use.
+      console.log(soynode.render('example.message.hello', {
+          name: process.env.USER
+        , date: new Date().toLocaleTimeString()
+      }))
+    })
+
+Also, see `examples/example.js`.
 
 `soynode.get(templatename)` - Returns a JS function corresponding to the template name.
 

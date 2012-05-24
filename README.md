@@ -19,9 +19,9 @@ Usage
 
 See `examples/example.js`.
 
-`soynode.get(templatename)` - Returns a JS function corrsponding to the template name.
+`soynode.get(templatename)` - Returns a JS function corresponding to the template name.
 
-`soynode.render(templatename, data)` - Returns a string that results of compiling a template.
+`soynode.render(templatename, data)` - Returns a string that results from executing a template.
 
 `soynode.setOptions(opts)` - Change the options, see section below.
 
@@ -57,7 +57,7 @@ recommended that you access templates via `soynode.get(project.section.content)`
 the symbol `project.section.content()` directly.  This does mean there is a chance that template
 namespaces will collide with other variables.
 
-I would have prefered to execute the templates using `vm.runInContext()` however the additional
+I would have preferred to execute the templates using `vm.runInContext()` however the additional
 overhead meant runtime was several orders of magnitude slower than direct function calls.
 
 In the future it would be nice to sandbox the template functions, so you should not rely on the

@@ -1,0 +1,25 @@
+{namespace example.message}
+
+/**
+ * Shows a hello message.
+ * @param date The current data
+ */
+{template .hello}
+  Hello {call .name data="all" /}, it is {$date}!
+{/template}
+
+
+/**
+ * A goodbye message
+ */
+{template .bye}
+  Goodbye {call .name data="all" /}, sorry to see you go.
+{/template}
+
+
+/**
+ * @param name The user's name
+ */
+{template .name}
+  __{$name}__
+{/template}

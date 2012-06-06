@@ -67,19 +67,16 @@ Options can be set via `soynode.setOptions(options)`, the keys can contain the f
 
 **NOTE: Options should be set before templates are loaded or compiled.**
 
-Caveats
--------
+Implementation Notes
+--------------------
 
-The present implementation loads the compiled templates in the global scope.  So while it is
-recommended that you access templates via `soynode.get(project.section.content)` you could reference
-the symbol `project.section.content()` directly.  This does mean there is a chance that template
-namespaces will collide with other variables.
+The templates are loaded using Node's [VM Module](http://nodejs.org/api/vm.html).  This allows us to
+execute the generated `.soy.js` files as is without a post processing step and without leaking the
+template functions into the global scope.
 
-I would have preferred to execute the templates using `vm.runInContext()` however the additional
-overhead meant runtime was several orders of magnitude slower than direct function calls.
-
-In the future it would be nice to sandbox the template functions, so you should not rely on the
-presence of the templates as global symbols.
+Calling `soynode.get` executes code which returns a reference to the template function within the
+VM Context.  The reference is cached, providing a 10x speed up over fetching the template function
+each time, or evaluating it in place and returning the template output over the VM boundary.
 
 Contributing
 ------------

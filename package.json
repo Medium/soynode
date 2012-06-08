@@ -1,6 +1,6 @@
 {
   "name" : "soynode",
-  "version" : "0.1.2",
+  "version" : "0.1.3",
   "description" : "Utility for working with Closure Templates, aka Soy, from within a node.js application.",
   "keywords" : ["node", "soy", "templates", "closure"],
   "repository" : {

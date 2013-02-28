@@ -64,8 +64,27 @@ Options can be set via `soynode.setOptions(options)`, the keys can contain the f
 - `allowDynamicRecompile` {boolean} Whether to watch for changes to the templates. [Default: false]
 - `eraseTemporaryFiles` {boolean} Whether to erase temporary files after a compilation.
 [Default: false]
+- `classpath` {array} Additional classpath to pass to the soy template compiler. This makes the
+  inclusion of plugins possible. [Default: empty]
+- `pluginModules` {array} Java classnames of plugin modules to pass to the soy template compiler.
+  [Default: empty]
+- `additionalArguments` {array} Additional command-line arguments for the soy template compiler.
+  [Default: empty]
 
 **NOTE: Options should be set before templates are loaded or compiled.**
+
+### Adding plugins
+
+The soy template compiler can be added [Java plugins](https://developers.google.com/closure/templates/docs/plugins)
+that provide additional functions. Consider you have a Java class `com.example.TestFunctions` in a file
+`testFunctions.jar`, this would be the syntax to enable it:
+
+```js
+soynode.setOptions({
+    classpath: [ './testFunctions.jar' ]
+  , pluginModules: [ 'com.example.TestFunctions' ]
+})
+```
 
 Implementation Notes
 --------------------

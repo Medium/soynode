@@ -24,6 +24,7 @@ soynode.compileTemplates(__dirname, function (err) {
     console.log(soynode.render('example.message.hello', {
         name: USER
       , date: new Date().toLocaleTimeString()
+      , variantToUse: Date.now() % 2 ? 'alpha' : 'beta'
     }))
   }, 1000)
 

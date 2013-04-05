@@ -1,0 +1,19 @@
+{namespace example.delegates autoescape="contextual"}
+
+/**
+ * Template for testing delegates
+ * @param variantToUse
+ */
+{template .test}
+  Using delegate : {delcall example.delegates.delegated variant="$variantToUse" /}
+{/template}
+
+/** Implementation 'alpha'. */
+{deltemplate example.delegates.delegated variant="'alpha'"}
+  Alpha!!
+{/deltemplate}
+
+/** Implementation 'beta'. */
+{deltemplate example.delegates.delegated variant="'beta'"}
+  Beta??
+{/deltemplate}

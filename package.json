@@ -1,6 +1,6 @@
 {
   "name" : "soynode",
-  "version" : "0.2.1",
+  "version" : "0.2.2",
   "description" : "Utility for working with Closure Templates, aka Soy, from within a node.js application.",
   "keywords" : ["node", "soy", "templates", "closure"],
   "repository" : {
@@ -16,6 +16,6 @@
   "main" : "./lib/soynode.js",
   "directories": {"lib": "./lib"},
   "dependencies": {
-    "closure-templates": "20130326.0.0"
+    "closure-templates": "20130416.0.0"
   }
 }

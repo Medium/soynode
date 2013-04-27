@@ -10,7 +10,8 @@ var soynode = require('../lib/soynode')
 var USER = process.env.USER || 'Stranger'
 
 soynode.setOptions({
-    tmpDir: '/tmp/soynode-example'
+    outputDir: '/tmp/soynode-example'
+  , uniqueDir: true
   , allowDynamicRecompile: true
   , eraseTemporaryFiles: true
 })

@@ -21,7 +21,7 @@ Usage
 var soynode = require('../lib/soynode')
 
 soynode.setOptions({
-    tmpDir: '/tmp/soynode-example'
+    outputDir: '/tmp/soynode-example'
   , allowDynamicRecompile: true
 })
 
@@ -59,8 +59,10 @@ Options
 
 Options can be set via `soynode.setOptions(options)`, the keys can contain the following:
 
-- `tmpDir` {string} Path to a directory where temporary files will be written during compilation.
+- `tmpDir` {string} Path to a directory where temporary files will be written during compilation. {Deprecated: use outputDir}
   [Default: /tmp/soynode]
+- `outputDir` {string} Path to a directory where files will be written. [Default: null]
+- `uniqueDir` {boolean} Determines whether the compiled files will be placed in a unique directory. [Default: true]
 - `allowDynamicRecompile` {boolean} Whether to watch for changes to the templates. [Default: false]
 - `eraseTemporaryFiles` {boolean} Whether to erase temporary files after a compilation.
 [Default: false]

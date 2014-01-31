@@ -66,6 +66,8 @@ Options can be set via `soynode.setOptions(options)`, the keys can contain the f
 - `allowDynamicRecompile` {boolean} Whether to watch for changes to the templates. [Default: false]
 - `eraseTemporaryFiles` {boolean} Whether to erase temporary files after a compilation.
 [Default: false]
+- `concatOutput` {boolean} Whether the compiled soy.js files should be joined into a single file. This is helpful for loading templates in a browser and simplest to use when `outputDir` is explicitly set and `uniqueDir` is false. [Default: false]
+- `concatFileName` {string} File name used for concatenated files, only relevant when concatOutput is true, ".soy.concat.js" is appended, so don't include ".js" yourself. [Default: compiled]
 
 **NOTE: Options should be set before templates are loaded or compiled.**
 

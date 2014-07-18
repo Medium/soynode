@@ -67,6 +67,7 @@ Options can be set via `soynode.setOptions(options)`, the keys can contain the f
 - `outputDir` {string} Path to a directory where files will be written. [Default: null]
 - `uniqueDir` {boolean} Determines whether the compiled files will be placed in a unique directory. [Default: true]
 - `allowDynamicRecompile` {boolean} Whether to watch for changes to the templates. Only relevant when compiled from a directory. [Default: false]
+- `loadCompiledTemplates` {boolean} Whether or not to load the compiled templates. Relevant when you only need to build templates. [Default: true]
 - `eraseTemporaryFiles` {boolean} Whether to erase temporary files after a compilation.
 [Default: false]
 - `concatOutput` {boolean} Whether the compiled soy.js files should be joined into a single file. This is helpful for loading templates in a browser and simplest to use when `outputDir` is explicitly set and `uniqueDir` is false. [Default: false]

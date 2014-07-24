@@ -66,7 +66,7 @@ Options can be set via `soynode.setOptions(options)`, the keys can contain the f
 - `inputDir` {string} Optional path to a directory where files will be read. When compiled from a directory, this option will be overwritten with the caller inputDir. [Default: process.cwd()]
 - `outputDir` {string} Path to a directory where files will be written. [Default: null]
 - `uniqueDir` {boolean} Determines whether the compiled files will be placed in a unique directory. [Default: true]
-- `allowDynamicRecompile` {boolean} Whether to watch for changes to the templates. Only relevant when compiled from a directory. [Default: false]
+- `allowDynamicRecompile` {boolean} Whether to watch for changes to the templates. [Default: false]
 - `loadCompiledTemplates` {boolean} Whether or not to load the compiled templates. Relevant when you only need to build templates. [Default: true]
 - `eraseTemporaryFiles` {boolean} Whether to erase temporary files after a compilation.
 [Default: false]

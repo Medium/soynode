@@ -45,6 +45,8 @@ Also, see `examples/example.js`.
 
 `soynode.compileTemplates(dir, callback)` - Compiles and loads all `.soy` files in the directory.
 
+`soynode.compileTemplateFiles(files, callback)` - Compiles and loads all `.soy` files.
+
 `soynode.loadCompiledTemplates(dir, callback)` - Loads already compiled templates.
 
 `soynode.loadCompiledTemplateFiles(files, callback)` - Loads already compiled templates.
@@ -61,9 +63,11 @@ Options can be set via `soynode.setOptions(options)`, the keys can contain the f
 
 - `tmpDir` {string} Path to a directory where temporary files will be written during compilation. {Deprecated: use outputDir}
   [Default: /tmp/soynode]
+- `inputDir` {string} Optional path to a directory where files will be read. When compiled from a directory, this option will be overwritten with the caller inputDir. [Default: process.cwd()]
 - `outputDir` {string} Path to a directory where files will be written. [Default: null]
 - `uniqueDir` {boolean} Determines whether the compiled files will be placed in a unique directory. [Default: true]
 - `allowDynamicRecompile` {boolean} Whether to watch for changes to the templates. [Default: false]
+- `loadCompiledTemplates` {boolean} Whether or not to load the compiled templates. Relevant when you only need to build templates. [Default: true]
 - `eraseTemporaryFiles` {boolean} Whether to erase temporary files after a compilation.
 [Default: false]
 - `concatOutput` {boolean} Whether the compiled soy.js files should be joined into a single file. This is helpful for loading templates in a browser and simplest to use when `outputDir` is explicitly set and `uniqueDir` is false. [Default: false]

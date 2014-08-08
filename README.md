@@ -72,6 +72,8 @@ Options can be set via `soynode.setOptions(options)`, the keys can contain the f
 [Default: false]
 - `concatOutput` {boolean} Whether the compiled soy.js files should be joined into a single file. This is helpful for loading templates in a browser and simplest to use when `outputDir` is explicitly set and `uniqueDir` is false. [Default: false]
 - `concatFileName` {string} File name used for concatenated files, only relevant when concatOutput is true, ".soy.concat.js" is appended, so don't include ".js" yourself. [Default: compiled]
+- `locales` {Array.<string>} List of locales to translate the templates to.
+- `messageFilePathFormat` {string} Path to the translation file to use, which can contain any of the placeholders allowed on the --messageFilePathFormat option of SoyToJsSrcCompiler.jar.
 
 **NOTE: Options should be set before templates are loaded or compiled.**
 

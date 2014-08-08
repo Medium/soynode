@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file original="SoyMsgBundle" datatype="x-soy-msg-bundle" xml:space="preserve" source-language="en" target-language="pt-BR">
+    <body>
+      <trans-unit id="3606105569361527896" datatype="html">
+        <source>Dear <x id="TITLE"/> <x id="SURNAME"/>: With a name like <x id="TITLE"/> <x id="SURNAME"/>, shouldn't you have your own theme song? We can help!</source>
+        <note priority="1" from="description">Promotional message for ordering theme songs</note>
+        <target>Querido <x id="TITLE"/> <x id="SURNAME"/>: Com um nome como <x id="TITLE"/> <x id="SURNAME"/>, você não deveria ter o seu própro tema musical? Nós podemos ajudar!</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

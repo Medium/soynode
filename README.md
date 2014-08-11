@@ -72,8 +72,32 @@ Options can be set via `soynode.setOptions(options)`, the keys can contain the f
 [Default: false]
 - `concatOutput` {boolean} Whether the compiled soy.js files should be joined into a single file. This is helpful for loading templates in a browser and simplest to use when `outputDir` is explicitly set and `uniqueDir` is false. [Default: false]
 - `concatFileName` {string} File name used for concatenated files, only relevant when concatOutput is true, ".soy.concat.js" is appended, so don't include ".js" yourself. [Default: compiled]
+- `locales` {Array.<string>} List of locales to translate the templates to.
+- `messageFilePathFormat` {string} Path to the translation file to use, which can contain any of the placeholders allowed on the --messageFilePathFormat option of SoyToJsSrcCompiler.jar.
 
 **NOTE: Options should be set before templates are loaded or compiled.**
+
+Internationalizion
+--------------------
+
+To take advantage of soy's [translation](https://developers.google.com/closure/templates/docs/translation) features through soynode, you should set the `locales` and `messageFilePathFormat` options, like in the example below:
+
+```js
+var soynode = require('../lib/soynode')
+
+soynode.setOptions({
+    locales: ['pt-BR', 'es'],
+    messageFilePathFormat: '/tmp/soynode-example/translations.xlf',
+    outputDir: '/tmp/soynode-example'
+})
+
+soynode.compileTemplates(__dirname, function (err) {
+  if (err) throw err
+  // Templates are now ready to use, render specifying the desired locale.
+  console.log(soynode.render('example.message.hello', {}, {}, 'pt-BR'))
+  console.log(soynode.render('example.message.hello', {}, {}, 'es'))
+})
+```
 
 Implementation Notes
 --------------------

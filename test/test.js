@@ -1,12 +1,65 @@
 'use strict';
 
+var child_process = require('child_process')
+var fs = require('fs');
+var path = require('path');
 var soynode = require('../lib/soynode.js');
 
+var watchFile = fs.watchFile
+var now = Date.now
+var spawn = child_process.spawn
+
 module.exports = {
+  tearDown: function (done) {
+    Date.now = now;
+    fs.watchFile = watchFile;
+    child_process.spawn = spawn;
+    soynode.setOptions(soynode.getDefaultOptions());
+    done();
+  },
+
   testCompileTemplates: function(test) {
     soynode.compileTemplates(__dirname + '/assets', function(err) {
       test.ifError(err);
       test.doesNotThrow(assertTemplatesContents.bind(null, test));
+      test.done();
+    });
+  },
+
+  testCompileTemplatesWatch: function(test) {
+    var time = 1;
+    Date.now = function () { return time; };
+
+    var files = [];
+    var callbacks = [];
+    fs.watchFile = function (f, opts, callback) {
+      files.push(f);
+      callbacks.push(callback);
+    };
+
+    var spawnOpts = []
+    child_process.spawn = function (prog, args, opts) {
+      spawnOpts.push(opts)
+      return spawn.apply(child_process, arguments)
+    }
+
+    soynode.setOptions({allowDynamicRecompile: true})
+    soynode.compileTemplates(__dirname + '/assets', function(err) {
+      test.ifError(err);
+
+      test.deepEqual(['template1.soy', 'template2.soy'], files.map(function (f) {
+        return path.basename(f);
+      }))
+      test.deepEqual([{cwd: __dirname + '/assets'}], spawnOpts)
+
+      time += 1000
+      callbacks[1]()
+
+      test.deepEqual(['template1.soy', 'template2.soy'], files.map(function (f) {
+        return path.basename(f);
+      }))
+      test.deepEqual([{cwd: __dirname + '/assets'}, {cwd: __dirname + '/assets'}], spawnOpts)
+
       test.done();
     });
   },

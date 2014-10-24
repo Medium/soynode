@@ -111,6 +111,9 @@ function assertTemplatesContents(test, locale) {
   var template1 = soynode.render('template1.formletter', { title: 'Mr.', surname: 'Pupius' }, null, locale);
   var template2 = soynode.render('template2.formletter', { title: 'Mr.', surname: 'Santos' }, null, locale);
 
+  test.equal('string', typeof template1)
+  test.equal('string', typeof template2)
+
   switch (locale) {
     case 'pt-BR':
       test.equal(template1, 'Querido Mr. Pupius: Com um nome como Mr. Pupius, você não deveria ter o seu própro tema musical? Nós podemos ajudar!');

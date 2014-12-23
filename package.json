@@ -19,9 +19,11 @@
     "closure-templates": "20141017.0.0"
   },
   "devDependencies": {
+    "jshint": "*",
     "nodeunit": "0.9.0"
   },
   "scripts": {
+    "lint": "node_modules/.bin/jshint .",
     "test": "node_modules/.bin/nodeunit test"
   }
 }

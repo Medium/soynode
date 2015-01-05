@@ -1,0 +1,8 @@
+{
+  "node": true,
+
+  "asi": true, // Tolerate trailing semicolons
+  "eqeqeq": false, // Require triple equals i.e. `===`.
+  "eqnull": true, // Tolerate use of `== null`.
+  "-W041": true // Tolerate use of `== 0`.
+}

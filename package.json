@@ -1,13 +1,13 @@
 {
   "name" : "soynode",
-  "version" : "0.7.2",
+  "version" : "0.7.3",
   "description" : "Utility for working with Closure Templates, aka Soy, from within a node.js application.",
   "keywords" : ["node", "soy", "templates", "closure"],
   "repository" : {
     "type" : "git",
-    "url" : "http://github.com/Obvious/soynode.git"
+    "url" : "http://github.com/Medium/soynode.git"
   },
-  "homepage" : "https://github.com/Obvious/soynode",
+  "homepage" : "https://github.com/Medium/soynode",
   "author" : {
     "name" : "Daniel Pupius",
     "email" : "dan@obvious.com",

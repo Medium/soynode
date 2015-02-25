@@ -104,6 +104,37 @@ module.exports = {
       test.doesNotThrow(assertTemplatesContents.bind(null, test, 'es'));
       test.done();
     });
+  },
+
+  testDefaultShouldDeclareTopLevelNamespaces: function(test) {
+    soynode.setOptions({
+      uniqueDir: false
+    });
+    soynode.compileTemplateFiles([__dirname + '/assets/template1.soy'], function(err) {
+      test.ifError(err);
+
+      var soyJsFilePath = path.join('/tmp/soynode', __dirname, 'assets/template1.soy.js');
+      var contents = fs.readFileSync(soyJsFilePath, 'utf8');
+      test.notEqual(-1, contents.indexOf('var template1 ='));
+
+      test.done();
+    });
+  },
+
+  testFalseShouldDeclareTopLevelNamespaces: function(test) {
+    soynode.setOptions({
+      shouldDeclareTopLevelNamespaces: false,
+      uniqueDir: false
+    });
+    soynode.compileTemplateFiles([__dirname + '/assets/template1.soy'], function(err) {
+      test.ifError(err);
+
+      var soyJsFilePath = path.join('/tmp/soynode', __dirname, 'assets/template1.soy.js');
+      var contents = fs.readFileSync(soyJsFilePath, 'utf8');
+      test.equal(-1, contents.indexOf('var template1 ='));
+
+      test.done();
+    });
   }
 };
 

@@ -1,6 +1,8 @@
 soynode
 =======
 
+[![Build Status](https://travis-ci.org/Medium/soynode.svg)](https://travis-ci.org/Medium/soynode)
+
 Utility for working with [Closure Templates](https://developers.google.com/closure/templates/),
 aka Soy, from within a node.js application.  Supports dynamic recompilation and loading for fast
 iteration during development.

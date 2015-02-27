@@ -135,6 +135,37 @@ module.exports = {
 
       test.done();
     });
+  },
+
+  testWithoutIjData: function(test) {
+    soynode.setOptions({
+      uniqueDir: false
+    });
+    soynode.compileTemplateFiles([__dirname + '/assets/template1.soy', __dirname + '/assets/template2.soy'], function(err) {
+      test.ifError(err);
+
+      var soyJsFilePath = path.join('/tmp/soynode', __dirname, 'assets/template2.soy.js');
+      var contents = fs.readFileSync(soyJsFilePath, 'utf8');
+      test.equal(-1, contents.indexOf('template1.formletter(opt_data, null, opt_ijData)'));
+
+      test.done();
+    });
+  },
+
+  testWithIjData: function(test) {
+    soynode.setOptions({
+      isUsingIjData: true,
+      uniqueDir: false
+    });
+    soynode.compileTemplateFiles([__dirname + '/assets/template1.soy', __dirname + '/assets/template2.soy'], function(err) {
+      test.ifError(err);
+
+      var soyJsFilePath = path.join('/tmp/soynode', __dirname, 'assets/template2.soy.js');
+      var contents = fs.readFileSync(soyJsFilePath, 'utf8');
+      test.notEqual(-1, contents.indexOf('template1.formletter(opt_data, null, opt_ijData)'));
+
+      test.done();
+    });
   }
 };
 

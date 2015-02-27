@@ -7,3 +7,11 @@
 {template .formletter}
 {msg desc="Promotional message for ordering theme songs"}Dear {$title} {$surname}: With a name like {$title} {$surname}, shouldn't you have your own theme song? We can help!{/msg}
 {/template}
+
+/**
+* @param title
+* @param surname
+**/
+{template .formletterCall}
+{call template1.formletter data="all" /}
+{/template}

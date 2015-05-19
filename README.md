@@ -61,7 +61,9 @@ the Closure site for more background.
 Options
 -------
 
-Options can be set via `soynode.setOptions(options)`, the keys can contain the following:
+Options can be set via `soynode.setOptions(options)`. Most of these mirror 
+[the command-line arguments](https://developers.google.com/closure/templates/docs/javascript_usage)
+for `SoyToJsSrcCompiler`. The keys can contain the following:
 
 - `tmpDir` {string} Path to a directory where temporary files will be written during compilation. {Deprecated: use outputDir}
   [Default: /tmp/soynode]
@@ -76,6 +78,7 @@ Options can be set via `soynode.setOptions(options)`, the keys can contain the f
 - `concatFileName` {string} File name used for concatenated files, only relevant when concatOutput is true, ".soy.concat.js" is appended, so don't include ".js" yourself. [Default: compiled]
 - `locales` {Array.<string>} List of locales to translate the templates to.
 - `messageFilePathFormat` {string} Path to the translation file to use, which can contain any of the placeholders allowed on the --messageFilePathFormat option of SoyToJsSrcCompiler.jar.
+- `cssHandlingScheme` {string} Processing options for the `css` command. [More info](https://developers.google.com/closure/templates/docs/commands#css)
 
 **NOTE: Options should be set before templates are loaded or compiled.**
 

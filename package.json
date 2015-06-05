@@ -1,6 +1,6 @@
 {
   "name" : "soynode",
-  "version" : "0.7.6",
+  "version" : "1.0.0",
   "description" : "Utility for working with Closure Templates, aka Soy, from within a node.js application.",
   "keywords" : ["node", "soy", "templates", "closure"],
   "repository" : {
@@ -10,18 +10,21 @@
   "homepage" : "https://github.com/Medium/soynode",
   "author" : {
     "name" : "Daniel Pupius",
-    "email" : "dan@obvious.com",
+    "email" : "dan@medium.com",
     "url" : "https://github.com/dpup"
   },
   "main" : "./lib/soynode.js",
   "directories": {"lib": "./lib"},
   "dependencies": {
-    "closure-templates": "^20141017.0.1"
+    "closure-templates": "^20150605.0.0",
+    "obvious-closure-library": "^20150605.0.0",
+    "q": "1.4.1"
   },
   "devDependencies": {
     "jshint": "*",
     "nodeunit": "0.9.0"
   },
+  "license": "Apache-2.0",
   "scripts": {
     "lint": "node_modules/.bin/jshint .",
     "test": "node_modules/.bin/nodeunit test"

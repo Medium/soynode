@@ -1,0 +1,22 @@
+{namespace template3}
+
+/**
+ * @param type
+ */
+{template .main}
+  {delcall template3._inner variant="$type" /}
+{/template}
+
+/**
+ * Default template
+ */
+{deltemplate template3._inner}
+  The default template
+{/deltemplate}
+
+/**
+ * Hello world template
+ */
+{deltemplate template3._inner variant="'hello'"}
+  Hello world
+{/deltemplate}

@@ -79,6 +79,10 @@ for `SoyToJsSrcCompiler`. The keys can contain the following:
 - `locales` {Array.<string>} List of locales to translate the templates to.
 - `messageFilePathFormat` {string} Path to the translation file to use, which can contain any of the placeholders allowed on the --messageFilePathFormat option of SoyToJsSrcCompiler.jar.
 - `cssHandlingScheme` {string} Processing options for the `css` command. [More info](https://developers.google.com/closure/templates/docs/commands#css)
+- `useClosureStyle` {boolean} Whether or not to use goog.provide and goog.require for JS functions and Soy namespaces.
+- `shouldGenerateJsdoc` {boolean} Whether or not to generate JSDoc on each template function, with type info for the Closure Compiler. [More info](https://developers.google.com/closure/templates/docs/javascript_usage)
+- `shouldProvideRequireSoyNamespaces` {boolean} Use this option to enable usage with Closure Library. [More info](https://developers.google.com/closure/templates/docs/javascript_usage)
+- `shouldProvideRequireJsFunctions` {boolean} Use this option to enable usage with Closure Library. [More info](https://developers.google.com/closure/templates/docs/javascript_usage)
 
 **NOTE: Options should be set before templates are loaded or compiled.**
 

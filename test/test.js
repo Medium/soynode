@@ -15,6 +15,7 @@ var spawn = child_process.spawn
 var watchFiles
 var watchCallbacks
 var spawnOpts
+var spawnArgs
 var time
 var soyCompiler
 
@@ -32,8 +33,10 @@ exports.setUp = function (done) {
   };
 
   spawnOpts = []
+  spawnArgs = []
   child_process.spawn = function (prog, args, opts) {
     spawnOpts.push(opts)
+    spawnArgs.push(args)
     return spawn.apply(child_process, arguments)
   }
   done()
@@ -58,18 +61,29 @@ builder.add(function testCompileTemplatesWatch(test) {
   soyCompiler.setOptions({allowDynamicRecompile: true})
   return Q.nfcall(soyCompiler.compileTemplates.bind(soyCompiler), __dirname + '/assets').then(function () {
     test.deepEqual(['template1.soy', 'template2.soy', 'template3.soy'], watchFiles.map(function (f) {
-      return path.basename(f);
+      return path.basename(f)
     }))
     test.deepEqual([{cwd: __dirname + '/assets'}], spawnOpts)
 
-    time += 1000
-    watchCallbacks[1]()
+    var args = spawnArgs[0]
+    test.deepEqual(['template1.soy', 'template2.soy', 'template3.soy'],
+                   args.slice(args.length - 3, args.length))
 
+    time += 1000
+    return watchCallbacks[1]()
+  }).then(function () {
     test.deepEqual(['template1.soy', 'template2.soy', 'template3.soy'], watchFiles.map(function (f) {
-      return path.basename(f);
+      return path.basename(f)
     }))
     test.deepEqual([{cwd: __dirname + '/assets'}, {cwd: __dirname + '/assets'}], spawnOpts)
-  });
+
+    var args = spawnArgs[1]
+    var secondLastArg = args[args.length - 2]
+    test.ok(secondLastArg.indexOf('/tmp/soynode') == 0)
+
+    var lastArg = args[args.length - 1]
+    test.equal('template2.soy', lastArg)
+  })
 })
 
 builder.add(function testCompileTemplatesWatchDelTemplate(test) {
@@ -80,8 +94,8 @@ builder.add(function testCompileTemplatesWatchDelTemplate(test) {
     test.equal('The default template', soyCompiler.render('template3.main', {type: 'goodbye'}))
 
     time += 1000
-    watchCallbacks[1]()
-
+    return watchCallbacks[1]()
+  }).then(function () {
     test.equal('The default template', soyCompiler.render('template3.main', {}))
     test.equal('Hello world', soyCompiler.render('template3.main', {type: 'hello'}))
     test.equal('The default template', soyCompiler.render('template3.main', {type: 'goodbye'}))

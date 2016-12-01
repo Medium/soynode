@@ -72,7 +72,7 @@ for `SoyToJsSrcCompiler`. The keys can contain the following:
 - `uniqueDir` {boolean} Determines whether the compiled files will be placed in a unique directory. [Default: true]
 - `allowDynamicRecompile` {boolean} Whether to watch for changes to the templates. [Default: false]
 - `loadCompiledTemplates` {boolean} Whether or not to load the compiled templates. Relevant when you only need to build templates. [Default: true]
-- `eraseTemporaryFiles` {boolean} Whether to erase temporary files after a compilation.
+- `eraseTemporaryFiles` {boolean} Whether to erase temporary files after a compilation. This option does nothing if allowDynamicRecompile is on, because allowDynamicRecompile reuses the files.
 [Default: false]
 - `concatOutput` {boolean} Whether the compiled soy.js files should be joined into a single file. This is helpful for loading templates in a browser and simplest to use when `outputDir` is explicitly set and `uniqueDir` is false. [Default: false]
 - `concatFileName` {string} File name used for concatenated files, only relevant when concatOutput is true, ".soy.concat.js" is appended, so don't include ".js" yourself. [Default: compiled]

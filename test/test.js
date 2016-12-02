@@ -1,7 +1,7 @@
 'use strict';
 
 var child_process = require('child_process')
-var fs = require('fs');
+var fs = require('fs-extra');
 var path = require('path');
 var soynode = require('../lib/soynode.js');
 var nodeunitq = require('nodeunitq')
@@ -18,6 +18,7 @@ var spawnOpts
 var spawnArgs
 var time
 var soyCompiler
+var tmpDir1 = path.join(__dirname, 'tmp1')
 
 exports.setUp = function (done) {
   soyCompiler = new soynode.SoyCompiler()
@@ -45,6 +46,7 @@ exports.setUp = function (done) {
 exports.tearDown = function (done) {
   Date.now = now;
   fs.watchFile = watchFile;
+  fs.removeSync(tmpDir1)
   child_process.spawn = spawn;
   done();
 }
@@ -70,6 +72,8 @@ builder.add(function testCompileTemplatesWatch(test) {
                    args.slice(args.length - 3, args.length))
 
     time += 1000
+    return Q.delay(1)
+  }).then(function () {
     return watchCallbacks[1]()
   }).then(function () {
     test.deepEqual(['template1.soy', 'template2.soy', 'template3.soy'], watchFiles.map(function (f) {
@@ -94,6 +98,8 @@ builder.add(function testCompileTemplatesWatchDelTemplate(test) {
     test.equal('The default template', soyCompiler.render('template3.main', {type: 'goodbye'}))
 
     time += 1000
+    return Q.delay(1)
+  }).then(function () {
     return watchCallbacks[1]()
   }).then(function () {
     test.equal('The default template', soyCompiler.render('template3.main', {}))
@@ -191,9 +197,75 @@ builder.add(function testWithIjData(test) {
   });
 })
 
-function assertTemplatesContents(test, locale) {
-  var template1 = soyCompiler.render('template1.formletter', { title: 'Mr.', surname: 'Pupius' }, null, locale);
-  var template2 = soyCompiler.render('template2.formletter', { title: 'Mr.', surname: 'Santos' }, null, locale);
+builder.add(function testPrecompileTemplatesOneCompiler(test) {
+  soyCompiler.setOptions({
+    outputDir: tmpDir1,
+    uniqueDir: false,
+    precompiledDir: tmpDir1
+  })
+
+  return Q.nfcall(soyCompiler.compileTemplates.bind(soyCompiler, __dirname + '/assets'))
+    .then(function () {
+      test.equal(1, spawnOpts.length)
+      return Q.nfcall(soyCompiler.compileTemplates.bind(soyCompiler, __dirname + '/assets'))
+    })
+    .then(function () {
+      // Confirm that we re-used the precompiled templates and didn't start a new soy binary.
+      test.equal(1, spawnOpts.length)
+      assertTemplatesContents(test, null, soyCompiler)
+    })
+})
+
+builder.add(function testPrecompileTemplatesTwoCompilers(test) {
+  soyCompiler.setOptions({
+    outputDir: tmpDir1,
+    uniqueDir: false
+  })
+
+  var soyCompilerB = new soynode.SoyCompiler()
+  soyCompilerB.setOptions({
+    precompiledDir: tmpDir1
+  })
+
+  return Q.nfcall(soyCompiler.compileTemplates.bind(soyCompiler, __dirname + '/assets'))
+    .then(function () {
+      test.equal(1, spawnOpts.length)
+      return Q.nfcall(soyCompilerB.compileTemplates.bind(soyCompilerB, __dirname + '/assets'))
+    })
+    .then(function () {
+      // Confirm that we re-used the precompiled templates and didn't start a new soy binary.
+      test.equal(1, spawnOpts.length)
+      assertTemplatesContents(test, null, soyCompiler)
+      assertTemplatesContents(test, null, soyCompilerB)
+    })
+})
+
+builder.add(function testPrecompileTemplatesOneCompilerMultipleLanguages(test) {
+  soyCompiler.setOptions({
+    outputDir: tmpDir1,
+    uniqueDir: false,
+    precompiledDir: tmpDir1,
+    locales: ['pt-BR', 'es'],
+    messageFilePathFormat: __dirname + '/assets/translations_{LOCALE}.xlf'
+  })
+
+  return Q.nfcall(soyCompiler.compileTemplates.bind(soyCompiler, __dirname + '/assets'))
+    .then(function () {
+      test.equal(1, spawnOpts.length)
+      return Q.nfcall(soyCompiler.compileTemplates.bind(soyCompiler, __dirname + '/assets'))
+    })
+    .then(function () {
+      // Confirm that we re-used the precompiled templates and didn't start a new soy binary.
+      test.equal(1, spawnOpts.length)
+      assertTemplatesContents(test, 'es')
+      assertTemplatesContents(test, 'pt-BR')
+    })
+})
+
+function assertTemplatesContents(test, locale, opt_soyCompiler) {
+  var underTest = opt_soyCompiler || soyCompiler
+  var template1 = underTest.render('template1.formletter', { title: 'Mr.', surname: 'Pupius' }, null, locale);
+  var template2 = underTest.render('template2.formletter', { title: 'Mr.', surname: 'Santos' }, null, locale);
 
   test.equal('string', typeof template1)
   test.equal('string', typeof template2)

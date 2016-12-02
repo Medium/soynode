@@ -83,6 +83,9 @@ for `SoyToJsSrcCompiler`. The keys can contain the following:
 - `shouldGenerateJsdoc` {boolean} Whether or not to generate JSDoc on each template function, with type info for the Closure Compiler. [More info](https://developers.google.com/closure/templates/docs/javascript_usage)
 - `shouldProvideRequireSoyNamespaces` {boolean} Use this option to enable usage with Closure Library. [More info](https://developers.google.com/closure/templates/docs/javascript_usage)
 - `shouldProvideRequireJsFunctions` {boolean} Use this option to enable usage with Closure Library. [More info](https://developers.google.com/closure/templates/docs/javascript_usage)
+- `precompiledDir` {string} A directory of precompiled soy.js files.
+  Soynode will check these first and use them if available.
+  You can set this to the same value as outputDir to re-use results from previous runs.
 
 **NOTE: Options should be set before templates are loaded or compiled.**
 

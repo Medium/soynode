@@ -262,6 +262,43 @@ builder.add(function testPrecompileTemplatesOneCompilerMultipleLanguages(test) {
     })
 })
 
+builder.add(function testDynamicRecompileWhenEventHandlerThrows(test) {
+  soyCompiler.setOptions({allowDynamicRecompile: true})
+
+  var defer = Q.defer()
+  var callback = function (err) {
+    if (err) {
+      defer.reject(err)
+    } else {
+      defer.resolve(null)
+    }
+  }
+  var emitter = soyCompiler.compileTemplates(__dirname + '/assets', callback)
+  emitter.on('compile', function () {
+    throw new Error('Deliberately thrown error')
+  })
+
+  return defer.promise.then(function () {
+    var args = spawnArgs.slice(0)[0]
+    test.equal('template3.soy', args.pop())
+
+    time += 1000
+    return Q.delay(1)
+  }).then(function () {
+    return watchCallbacks[1]()
+  }).then(function () {
+    var args = spawnArgs.slice(0)[0]
+    test.equal('template2.soy', args.pop())
+    time += 1000
+    return Q.delay(1)
+  }).then(function () {
+    return watchCallbacks[0]()
+  }).then(function () {
+    var args = spawnArgs.slice(0)[0]
+    test.equal('template1.soy', args.pop())
+  })
+})
+
 function assertTemplatesContents(test, locale, opt_soyCompiler) {
   var underTest = opt_soyCompiler || soyCompiler
   var template1 = underTest.render('template1.formletter', { title: 'Mr.', surname: 'Pupius' }, null, locale);

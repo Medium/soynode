@@ -19,6 +19,7 @@ var spawnArgs
 var time
 var soyCompiler
 var tmpDir1 = path.join(__dirname, 'tmp1')
+var tmpDir2 = path.join(__dirname, 'tmp2')
 
 exports.setUp = function (done) {
   soyCompiler = new soynode.SoyCompiler()
@@ -47,6 +48,7 @@ exports.tearDown = function (done) {
   Date.now = now;
   fs.watchFile = watchFile;
   fs.removeSync(tmpDir1)
+  fs.removeSync(tmpDir2)
   child_process.spawn = spawn;
   done();
 }
@@ -224,7 +226,9 @@ builder.add(function testPrecompileTemplatesTwoCompilers(test) {
 
   var soyCompilerB = new soynode.SoyCompiler()
   soyCompilerB.setOptions({
-    precompiledDir: tmpDir1
+    precompiledDir: tmpDir1,
+    outputDir: tmpDir2,
+    uniqueDir: false
   })
 
   return Q.nfcall(soyCompiler.compileTemplates.bind(soyCompiler, __dirname + '/assets'))

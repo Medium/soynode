@@ -16,7 +16,6 @@
   "main" : "./lib/soynode.js",
   "directories": {"lib": "./lib"},
   "dependencies": {
-    "closure-templates": "^20160825.0.0",
     "fs-extra": "1.0.0",
     "obvious-closure-library": "^20161024.0.0",
     "q": "1.4.1"
